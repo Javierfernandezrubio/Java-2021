@@ -6,17 +6,22 @@ package programacionOrientadaObjetos;
 /**
  * Clase Fraccion de forma que podamos hacer las siguientes operaciones:
  * 
- * Contruir un objeto Fraccion pasándole el numerador y el denominador. Obtener
- * la fracción como cadena de caracteres. Obtener y modificar numerador y
- * denominador. No se puede dividir por cero. Obtener resultado de la fracción
- * (número real). Multiplicar la fracción por un número (el resultado es otro
- * objeto fracción). Multiplicar, sumar y restar fracciones (el resultado es
- * otro objeto fracción). Simplificar la fracción (cambia el objeto actual).
+ * · Contruir un objeto Fraccion pasándole el numerador y el denominador. 
+ * · Obtener la fracción como cadena de caracteres. 
+ * · Obtener y modificar numerador y
+ * denominador. No se puede dividir por cero. 
+ * · Obtener resultado de la fracción
+ * (número real). 
+ * · Multiplicar la fracción por un número (el resultado es otro
+ * objeto fracción). 
+ * · Multiplicar, sumar y restar fracciones (el resultado es
+ * otro objeto fracción). 
+ * · Simplificar la fracción (cambia el objeto actual).
  * 
  * 
  * @author javier fernandez rubio
- * @version 1.0 
- * Fecha 19/01/2021
+ * @version 1.1
+ * Fecha 20/01/2021
  *
  */
 public class Fraccion {
@@ -43,10 +48,6 @@ public class Fraccion {
 	 * @param b denominador
 	 */
 	public Fraccion(int a, int b) {
-		if (b == 0) {
-			throw new RuntimeException("El denominador no puede ser cero.");
-		}
-
 		this.numerador = a;
 		this.denominador = b;
 	}
@@ -78,11 +79,12 @@ public class Fraccion {
 	 * @param denominador the denominador to set
 	 */
 	public void setDenominador(int denominador) {
-		if (denominador == 0) {
-			throw new RuntimeException("El denominador no puede ser cero.");
-		}
-
 		this.denominador = denominador;
+		
+		if (denominador == 0) {
+			//throw new RuntimeException("El denominador no puede ser cero.");
+			System.err.println("El denominador no puede ser cero.");
+		}
 	}
 
 	// ToString
@@ -101,11 +103,9 @@ public class Fraccion {
 	/**
 	 * Resultado de la fraccion en número real
 	 * 
-	 * @param fraccion
-	 * @return
+	 * @return resultado en numero real
 	 */
-	public double resultado(Fraccion fraccion) {
-
+	public double resultado() {
 		return (double) (this.numerador / this.denominador);
 	}
 
@@ -132,13 +132,31 @@ public class Fraccion {
 	/**
 	 * Simplificar una fraccion
 	 * 
-	 * @param numero
 	 */
-	public void simplificar(int numero) {
-		if ( this.numerador % numero == 0 && this.denominador % numero == 0 ) {
-			this.numerador = this.numerador  / numero;
-			this.denominador = this.denominador / numero;
+	public void simplificar() {
+		int dividir = mcd();
+    this.numerador /= dividir;
+    this.denominador /= dividir;
+	}
+	
+	/**
+	 * Metodo privado para calcular el multiplo comun denominador
+	 * 
+	 * @return numera multiplo comun denominador
+	 */
+	private int mcd() {
+		int numera = Math.abs(this.numerador);
+		int denomina = Math.abs(this.denominador);
+		if (denomina == 0) {
+			return numera;
 		}
+		int resto;
+		while (denomina != 0) {
+			resto = numera % denomina;
+			numera = denomina;
+			denomina = resto;
+		}
+		return numera;
 	}
 	
 	
@@ -152,13 +170,13 @@ public class Fraccion {
 		if ( this.denominador == otraFraccion.denominador ) {
 			return new Fraccion(this.numerador + otraFraccion.numerador, this.denominador );
 		} else {
-			return new Fraccion(this.numerador*otraFraccion.denominador + this.denominador*otraFraccion.numerador, this.denominador*otraFraccion.denominador );
+			return new Fraccion(this.numerador*otraFraccion.denominador + this.denominador*otraFraccion.numerador, 
+													this.denominador*otraFraccion.denominador );
 		}
-		
 	}
 	
 	/**
-	 * Suma de dos objetos Fraccion
+	 * Resta de dos objetos Fraccion
 	 * 
 	 * @param otraFraccion
 	 * @return fraccionResultante objeto de tipo Fraccion
@@ -167,7 +185,8 @@ public class Fraccion {
 		if ( this.denominador == otraFraccion.denominador ) {
 			return new Fraccion(this.numerador - otraFraccion.numerador, this.denominador );
 		} else {
-			return new Fraccion(this.numerador*otraFraccion.denominador - this.denominador*otraFraccion.numerador, this.denominador*otraFraccion.denominador );
+			return new Fraccion(this.numerador*otraFraccion.denominador - this.denominador*otraFraccion.numerador, 
+													this.denominador*otraFraccion.denominador );
 		}
 		
 	}
