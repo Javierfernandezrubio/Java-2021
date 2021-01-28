@@ -24,7 +24,7 @@ package programacionOrientadaObjetos;
  * Fecha 20/01/2021
  *
  */
-public class Fraccion {
+public class Fraccion implements Cloneable {
 
 	// Atributos
 
@@ -52,6 +52,12 @@ public class Fraccion {
 		this.denominador = b;
 	}
 
+	@Override
+	public Fraccion clone() {
+		Fraccion clon = new Fraccion(this.numerador, this.denominador);
+		return clon;
+	}
+	
 	// Getters y Setters
 
 	/**

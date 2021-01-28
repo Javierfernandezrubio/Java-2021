@@ -10,7 +10,7 @@ package programacionOrientadaObjetos;
  * 
  *
  */
-public class Tiempo {
+public class Tiempo implements Cloneable {
 
 	// Atributos
 
@@ -31,6 +31,12 @@ public class Tiempo {
 		this.horas = segundosTotales / 3600;
 		this.minutos = (segundosTotales % 3600) / 60;
 		this.segundos = (segundosTotales % 3600) % 60;
+	}
+	
+	@Override
+	public Tiempo clone() {
+		Tiempo clon = new Tiempo(this.horas, this.minutos, this.segundos);
+		return clon;
 	}
 
 	// Getters y setters de los atributos
