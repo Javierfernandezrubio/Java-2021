@@ -27,44 +27,45 @@ import java.io.IOException;
 public class Ejercicio3Libro {
 
   public static void main(String[] args) {
-
-    // Comprobamos los argumentos recibidos
-    String fichero1 = null;
-    String fichero2 = null;
-    try {
-      if (args.length !=2) {
+    
+    if (args.length !=3) {
         System.err.println("Número de parámetros recibido incorrecto.");
         System.exit(2);
-      } else { // asignamos nombres de los ficheros según los argumentos recibidos.
-        fichero1 = args[0];
-        fichero2 = args[1];
       }
-    } catch (Exception e){
-      System.out.println("Se ha producido un error.");
-      System.exit(1);
-    }
+
+    
     // Abrimos archivos de lectura y archivo de escritura
     try {
-      BufferedReader lectura1 = new BufferedReader(new FileReader(fichero1));
-      BufferedReader lectura2 = new BufferedReader(new FileReader(fichero2));
-      BufferedWriter mezcla = new BufferedWriter(new FileWriter("mezcla.txt"));
+      BufferedReader lectura1 = new BufferedReader(new FileReader(args[0]));
+      BufferedReader lectura2 = new BufferedReader(new FileReader(args[1]));
+      BufferedWriter mezcla = new BufferedWriter(new FileWriter(args[2]));
 
       // Leemos y mostramos la primera línea por pantalla.
       String linea1 = lectura1.readLine();
       String linea2 = lectura2.readLine();
 
-      while (linea1 != null || linea2 != null) {
-        if (linea1 != null) {
-          mezcla.write(linea1);
-          mezcla.newLine();
+      while (linea1 != null && linea2 != null) {
+          escribeMezcla(mezcla, linea1, linea2);
           linea1 = lectura1.readLine();
-        }
-        if (linea2 != null) {
+          linea2 = lectura2.readLine();
+      }
+      
+      if ( linea1 == null ) {
+        while ( linea2 != null ) {
           mezcla.write(linea2);
           mezcla.newLine();
           linea2 = lectura2.readLine();
         }
+      } else {
+        while ( linea1 != null ) {
+          mezcla.write(linea1);
+          mezcla.newLine();
+          linea2 = lectura1.readLine();
+        }
       }
+      
+      
+      
       // Cerramos ficheros
       lectura1.close();
       lectura2.close();
@@ -79,6 +80,16 @@ public class Ejercicio3Libro {
       System.err.println("Error de entrada/salida al manejar el fichero");
       System.exit(2);
     }
+  }
+
+  private static void escribeMezcla(BufferedWriter mezcla, String linea1, String linea2)
+      throws IOException {
+    mezcla.write(linea1);
+    mezcla.newLine();
+    
+    
+    mezcla.write(linea2);
+    mezcla.newLine();
   }
 
 }

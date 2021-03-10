@@ -22,19 +22,17 @@ import java.io.IOException;
 public class Ejercicio2Libro {
   
   public static void main(String[] args) {
-    // Abre fichero Ejercicio1Primos.txt
-    try {
-      BufferedReader lectura = new BufferedReader(new FileReader("Ejercicio1Primos.txt"));
+    // Abre fichero Ejercicio1Primos.txt con try-with-resources
+    try (BufferedReader lectura = new BufferedReader(new FileReader("Ejercicio1Primos.dat"))){
       
-      // Leemos y mostramos la primera línea por pantalla.
-      System.out.println(lectura.readLine());
+      // Creamos variable de control.
+      String linea;
     
-      // Continuamos leyendo hasta el final del archivo.
-      while (lectura.readLine() != null){
-        System.out.println(lectura.readLine());
+      // Leemos hasta el final del archivo y mostramos por pantalla.
+      while ((linea = lectura.readLine()) != null){
+        System.out.println(linea);
       }
-      lectura.close();
-      System.out.println("Fin del contenido del archivo \"Ejercicio1Primos.txt\"");
+      System.out.println("Fin del contenido del archivo \"Ejercicio1Primos.dat\"");
     } catch (FileNotFoundException e){
       System.err.println("No se encuentra el archivo.");
       System.exit(1);

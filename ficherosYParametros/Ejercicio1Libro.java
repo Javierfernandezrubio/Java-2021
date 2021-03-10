@@ -25,9 +25,9 @@ public class Ejercicio1Libro {
   public static void main(String[] args) {
 
     int NUMERO = 500; // Constante que indica cuantos números primos obtendremos.
-    // Abre fichero primos.dat
+    // Abre fichero Ejercicio1Primo.dat
     try {
-      BufferedWriter escritura = new BufferedWriter(new FileWriter("Ejercicio1Primos.txt"));
+      BufferedWriter escritura = new BufferedWriter(new FileWriter("Ejercicio1Primos.dat"));
       // Escribimos el número 2 como inicio del archivo.
       escritura.write("2");
       escritura.newLine();
@@ -53,7 +53,7 @@ public class Ejercicio1Libro {
         numEsPrimo +=2;
       }
       escritura.close();
-      System.out.println("Archivo \"Ejercicio1Primos.txt\" con los números primos entre 1 y "+ NUMERO + " creado correctamente.");
+      System.out.println("Archivo \"Ejercicio1Primos.dat\" con los números primos entre 1 y "+ NUMERO + " creado correctamente.");
     } catch (FileNotFoundException e){
       System.err.println("No se encuentra el archivo.");
       System.exit(1);
