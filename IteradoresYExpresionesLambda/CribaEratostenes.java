@@ -4,14 +4,16 @@ import java.util.List;
 
 public class CribaEratostenes implements Iterable<Integer>{
 
+  private int maximo;
   private List<Integer> numerosPrimos = new ArrayList<>();
 
 
-  public CribaEratostenes(int size) {
-    if (size < 2) {
+  public CribaEratostenes(int maximo) {
+    if (maximo < 2) {
       throw new IllegalArgumentException("Cantidad de numeros primos inferior a 2.");
     }
-    this.numerosPrimos = CribaEratostenes.generarLista(size); 
+    this.maximo = maximo;
+    this.numerosPrimos = generarLista(); 
   }
 
   @Override
@@ -19,22 +21,29 @@ public class CribaEratostenes implements Iterable<Integer>{
     return numerosPrimos.iterator();
   }
 
-  public static List<Integer> generarLista(int size) {
+  public List<Integer> generarLista() {
     List<Integer> lista = new ArrayList<>();
-    int index = 0;
     
-    for (int i = 2; i <= size; i++) {
-      lista.add(i);
-    }
     
-    while (Math.pow(lista.get(index),2) <= size) {
-      long primo = lista.get(index);
-      lista.subList(index+1, lista.size()).removeIf(n -> (n % primo) == 0);
-      index++;
-    }
+    rellenarLista(lista);
+    cribaEratostenes(lista);
     
     return lista;
-    
+  }
+
+  private void rellenarLista(List<Integer> lista) {
+    for (int i = 2; i <= maximo; i++) {
+      lista.add(i);
+    }
+  }
+
+  private void cribaEratostenes(List<Integer> lista) {
+    int index = 0;
+    while (Math.pow(lista.get(index),2) <= maximo) {
+      int numPrimo = lista.get(index);
+      lista.subList(index+1, lista.size()).removeIf(numero -> (numero % numPrimo) == 0);
+      index++;
+    }
   }
 
 }
